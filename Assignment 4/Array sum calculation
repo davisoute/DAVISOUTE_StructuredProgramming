@@ -1,1 +1,17 @@
+#include <stdio.h>
 
+int main(){
+    int numbers[3];
+    int sum;
+    for (int i = 0; i < 3; i++)
+    {
+        printf("Enter integer elements: \n");
+        scanf("%d", &numbers[i]);
+    }
+
+    sum = numbers[0] + numbers[1] + numbers[2];
+    printf("Sum of all elements stored in the array = %d", sum);
+
+    return 0;
+    
+}
