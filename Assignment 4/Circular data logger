@@ -1,1 +1,54 @@
+#include <stdio.h>
+
+#define BUFFER_SIZE 5
+
+void insertSample(int buffer[], int *index, int value) {
+    buffer[*index] = value;      
+    *index = (*index + 1) % BUFFER_SIZE; 
+}
+
+void printBuffer(int buffer[], int count, int start) {
+    printf("Buffer contents (oldest → newest): ");
+    for (int i = 0; i < count; i++) {
+        int idx = (start + i) % BUFFER_SIZE;
+        printf("%d ", buffer[idx]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int buffer[BUFFER_SIZE] = {0};
+    int currentIndex = 0;
+    int totalEntries = 0;   
+    int value;
+    char choice;
+
+    printf("Circular Data Logger (BUFFER_SIZE = %d)\n", BUFFER_SIZE);
+
+    while (1) {
+        printf("Enter sensor value: ");
+        scanf("%d", &value);
+
+        insertSample(buffer, &currentIndex, value);
+
+        if (totalEntries < BUFFER_SIZE) {
+            totalEntries++;
+        }
+        
+        printf("Print buffer? (y/n): ");
+        scanf(" %c", &choice);
+
+        if (choice == 'y' || choice == 'Y') {
+            int oldestIndex = (totalEntries == BUFFER_SIZE) ? currentIndex : 0;
+            printBuffer(buffer, totalEntries, oldestIndex);
+        }
+
+        // Continue or e
+        printf("Continue? (y/n): ");
+        scanf(" %c", &choice);
+        if (choice == 'n' || choice == 'N') break;
+    }
+
+    return 0;
+}
 
